@@ -6,11 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
         #ocean {
+            position: relative;
             width:500px;
             height: 500px;
             background-color: aqua;
             border: 1px solid black;
             border-radius: 2px;
+        }
+        #boat {
+            position:absolute;
         }
     </style>
   </head>
@@ -25,13 +29,42 @@
     </div>
   </body>
     <script>
+        var newX = 0, newY = 0, oldX = 0, oldY = 0
+        var boat = document.getElementById('boat')
         moveBoat()
+
         function moveBoat() {
-            const boat = document.getElementById('boat')
-            boat.addEventListener('mousedown', goSailing)
+            boat.addEventListener('mousedown', setSailing)
         }
-        function goSailing(){
-            console.log('sailing')
+        function setSailing(e) {
+            e = e || window.event;
+            e.preventDefault();
+
+            // get the mouse cursor position at startup:
+            oldX = e.clientX;
+            oldY = e.clientY;
+            // document.onmouseup = closeDragElement;
+            // call a function whenever the cursor moves:
+            console.log('clicked')
+            document.onmouseup = anchor;
+    // call a function whenever the cursor moves:
+            document.onmousemove = sail;
+            // document.addEventListener('onmouseup', anchor)
+            // document.addEventListener('onmousemove', sail)
+        }
+        function anchor (e) {
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+        function sail(e) {
+            newX = oldX - e.clientX;
+            newY = oldY - e.clientY;
+            oldX = e.clientX;
+            oldY = e.clientY;
+            console.log(newX)
+            boat.style.top = (boat.offsetTop - newY) + "px";
+            boat.style.left = (boat.offsetLeft - newX) + "px";
+
         }
 
         // document.getElementById("root").innerHTML = "Hellow World!";
