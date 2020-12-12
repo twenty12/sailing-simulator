@@ -18,15 +18,15 @@
         width: 70px;
       }
       .boat img {
-          display: block;
-          margin: auto;
-          width: 75%;
+        display: block;
+        margin: auto;
+        width: 75%;
       }
       .boat:hover {
         border: 1px solid grey;
       }
       #boat2 {
-          left: 70px;
+        left: 70px;
       }
     </style>
   </head>
@@ -40,24 +40,24 @@
             alt="sailboat"
           />
         </div>
-        <div id="boat2" class="boat">
-            <img
-              src="/Users/danielgladstone/Documents/sailing-simulator/app/src/sailboat.svg"
-              alt="sailboat"
-            />
-          </div>
+        <!-- <div id="boat2" class="boat">
+          <img
+            src="/Users/danielgladstone/Documents/sailing-simulator/app/src/sailboat.svg"
+            alt="sailboat"
+          />
+        </div> -->
       </div>
     </div>
   </body>
   <script>
-    var boat = document.getElementById("boat")
-    var boat2 = document.getElementById("boat2")
-    makeElMoveable(boat)
-    makeElMoveable(boat2)
+    var boat = document.getElementById("boat");
+    var boat2 = document.getElementById("boat2");
+    makeElMoveable(boat);
+    // makeElMoveable(boat2);
 
     function makeElMoveable(el) {
-      var oldHeight = el.style.height
-      var oldWidth = el.style.width
+      var oldHeight = el.offsetHeight;
+      var oldWidth = el.offsetWidth;
 
       el.addEventListener("mousedown", (e) => {
         var pos = {
@@ -65,46 +65,70 @@
           newY: 0,
           oldX: 0,
           oldY: 0,
-        }
+        };
 
-
-
-        e = e || window.event
-        e.preventDefault()
-        pos.oldX = e.clientX
-        pos.oldY = e.clientY
-
+        e = e || window.event;
+        e.preventDefault();
+        pos.oldX = e.clientX;
+        pos.oldY = e.clientY;
 
         function moveDiv(e) {
-          pos.newX = pos.oldX - e.clientX
-          pos.newY = pos.oldY - e.clientY
-          pos.oldX = e.clientX
-          pos.oldY = e.clientY
-          el.style.top = el.offsetTop + pos.newY + "px"
-          el.style.left = el.offsetLeft + pos.newX + "px"
+          pos.newX = pos.oldX - e.clientX;
+          pos.newY = pos.oldY - e.clientY;
+          pos.oldX = e.clientX;
+          pos.oldY = e.clientY;
+          el.style.top = el.offsetTop + pos.newY + "px";
+          el.style.left = el.offsetLeft + pos.newX + "px";
         }
 
         function resizeDiv(e) {
-            pos.newX = pos.oldX + e.clientX
-            pos.newY = pos.oldY + e.clientY
-            pos.oldX = e.clientX
-            pos.oldY = e.clientY
-            var newWidth = oldWidth + pos.newY + "px"
-            var newHeight = oldHeight + pos.newX + "px"
-            el.style.height = newWidth
-            el.style.width = newHeight
-            
+          pos.newX = pos.oldX + e.clientX;
+          pos.newY = pos.oldY + e.clientY;
+          pos.oldX = e.clientX;
+          pos.oldY = e.clientY;
+          console.log(pos.newY)
+          var newWidth = oldWidth + pos.newX + "px";
+          var newHeight = oldHeight + pos.newY + "px";
+          el.style.height = newWidth;
+          el.style.width = newHeight;
         }
-        document.onmouseup = cleanUp
-        document.onmousemove = resizeDiv
-      })
+        function edgeWasClick() {
+          var distBottom = el.style.height - e.offsetY
+          var distRight = el.style.width - e.offsetX
+          var clickableArea = 10
+          console.log(e)
+          if (e.offsetX < clickableArea) {
+            if (e.offsetY < clickableArea){
+              // top left
+              return true
+            }
+            if (distBottom < clickableArea) {
+              // bottom right
+              return true
+            }
+          }
+          if (distRight < clickableArea ){
+            if (e.offsetY < clickableArea){
+              // top right
+              return true
+            }
+            if (distBottom < clickableArea) {
+              // top left
+              return true
+            }
+          }
+        }
+        if (edgeWasClick()) {
+
+        }
+        document.onmouseup = cleanUp;
+        document.onmousemove = resizeDiv;
+      });
     }
 
     function cleanUp(e) {
-      document.onmouseup = null
-      document.onmousemove = null
+      document.onmouseup = null;
+      document.onmousemove = null;
     }
-
-    // document.getElementById("root").innerHTML = "Hellow World!"
   </script>
 </html>
