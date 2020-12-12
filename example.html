@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        #ocean {
+            width:500px;
+            height: 500px;
+            background-color: aqua;
+            border: 1px solid black;
+            border-radius: 2px;
+        }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+        <div id="ocean">
+            <div id="boat">
+                <img src="/Users/danielgladstone/Documents/sailing-simulator/app/src/sailboat.svg" alt="sailboat" >
+            </div>
+        </div>
+    </div>
+  </body>
+    <script>
+        moveBoat()
+        function moveBoat() {
+            const boat = document.getElementById('boat')
+            boat.addEventListener('mousedown', goSailing)
+        }
+        function goSailing(){
+            console.log('sailing')
+        }
+
+        // document.getElementById("root").innerHTML = "Hellow World!";
+    </script>
+</html>
