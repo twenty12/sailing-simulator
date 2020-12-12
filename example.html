@@ -15,9 +15,18 @@
       }
       .boat {
         position: absolute;
+        width: 70px;
+      }
+      .boat img {
+          display: block;
+          margin: auto;
+          width: 75%;
+      }
+      .boat:hover {
+        border: 1px solid grey;
       }
       #boat2 {
-          left:30px;
+          left: 70px;
       }
     </style>
   </head>
@@ -47,6 +56,9 @@
     makeElMoveable(boat2)
 
     function makeElMoveable(el) {
+      var oldHeight = el.style.height
+      var oldWidth = el.style.width
+
       el.addEventListener("mousedown", (e) => {
         var pos = {
           newX: 0,
@@ -54,20 +66,37 @@
           oldX: 0,
           oldY: 0,
         }
+
+
+
         e = e || window.event
         e.preventDefault()
         pos.oldX = e.clientX
         pos.oldY = e.clientY
+
+
         function moveDiv(e) {
           pos.newX = pos.oldX - e.clientX
           pos.newY = pos.oldY - e.clientY
           pos.oldX = e.clientX
           pos.oldY = e.clientY
-          el.style.top = el.offsetTop - pos.newY + "px"
-          el.style.left = el.offsetLeft - pos.newX + "px"
+          el.style.top = el.offsetTop + pos.newY + "px"
+          el.style.left = el.offsetLeft + pos.newX + "px"
+        }
+
+        function resizeDiv(e) {
+            pos.newX = pos.oldX + e.clientX
+            pos.newY = pos.oldY + e.clientY
+            pos.oldX = e.clientX
+            pos.oldY = e.clientY
+            var newWidth = oldWidth + pos.newY + "px"
+            var newHeight = oldHeight + pos.newX + "px"
+            el.style.height = newWidth
+            el.style.width = newHeight
+            
         }
         document.onmouseup = cleanUp
-        document.onmousemove = moveDiv
+        document.onmousemove = resizeDiv
       })
     }
 
