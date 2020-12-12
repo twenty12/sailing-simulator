@@ -5,68 +5,77 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-        #ocean {
-            position: relative;
-            width:500px;
-            height: 500px;
-            background-color: aqua;
-            border: 1px solid black;
-            border-radius: 2px;
-        }
-        #boat {
-            position:absolute;
-        }
+      #ocean {
+        position: relative;
+        width: 500px;
+        height: 500px;
+        background-color: aqua;
+        border: 1px solid black;
+        border-radius: 2px;
+      }
+      .boat {
+        position: absolute;
+      }
+      #boat2 {
+          left:30px;
+      }
     </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root">
-        <div id="ocean">
-            <div id="boat">
-                <img src="/Users/danielgladstone/Documents/sailing-simulator/app/src/sailboat.svg" alt="sailboat" >
-            </div>
+      <div id="ocean">
+        <div id="boat" class="boat">
+          <img
+            src="/Users/danielgladstone/Documents/sailing-simulator/app/src/sailboat.svg"
+            alt="sailboat"
+          />
         </div>
+        <div id="boat2" class="boat">
+            <img
+              src="/Users/danielgladstone/Documents/sailing-simulator/app/src/sailboat.svg"
+              alt="sailboat"
+            />
+          </div>
+      </div>
     </div>
   </body>
-    <script>
-        var newX = 0, newY = 0, oldX = 0, oldY = 0
-        var boat = document.getElementById('boat')
-        moveBoat()
+  <script>
+    var boat = document.getElementById("boat")
+    var boat2 = document.getElementById("boat2")
+    makeElMoveable(boat)
+    makeElMoveable(boat2)
 
-        function moveBoat() {
-            boat.addEventListener('mousedown', setSailing)
+    function makeElMoveable(el) {
+      el.addEventListener("mousedown", (e) => {
+        var pos = {
+          newX: 0,
+          newY: 0,
+          oldX: 0,
+          oldY: 0,
         }
-        function setSailing(e) {
-            e = e || window.event;
-            e.preventDefault();
+        e = e || window.event
+        e.preventDefault()
+        pos.oldX = e.clientX
+        pos.oldY = e.clientY
+        function moveDiv(e) {
+          pos.newX = pos.oldX - e.clientX
+          pos.newY = pos.oldY - e.clientY
+          pos.oldX = e.clientX
+          pos.oldY = e.clientY
+          el.style.top = el.offsetTop - pos.newY + "px"
+          el.style.left = el.offsetLeft - pos.newX + "px"
+        }
+        document.onmouseup = cleanUp
+        document.onmousemove = moveDiv
+      })
+    }
 
-            // get the mouse cursor position at startup:
-            oldX = e.clientX;
-            oldY = e.clientY;
-            // document.onmouseup = closeDragElement;
-            // call a function whenever the cursor moves:
-            console.log('clicked')
-            document.onmouseup = anchor;
-    // call a function whenever the cursor moves:
-            document.onmousemove = sail;
-            // document.addEventListener('onmouseup', anchor)
-            // document.addEventListener('onmousemove', sail)
-        }
-        function anchor (e) {
-            document.onmouseup = null;
-            document.onmousemove = null;
-        }
-        function sail(e) {
-            newX = oldX - e.clientX;
-            newY = oldY - e.clientY;
-            oldX = e.clientX;
-            oldY = e.clientY;
-            console.log(newX)
-            boat.style.top = (boat.offsetTop - newY) + "px";
-            boat.style.left = (boat.offsetLeft - newX) + "px";
+    function cleanUp(e) {
+      document.onmouseup = null
+      document.onmousemove = null
+    }
 
-        }
-
-        // document.getElementById("root").innerHTML = "Hellow World!";
-    </script>
+    // document.getElementById("root").innerHTML = "Hellow World!"
+  </script>
 </html>
