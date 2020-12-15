@@ -2,10 +2,11 @@ import './App.css';
 import SailBoat from './SailBoat'
 
 function App() {
+
   return (
-    <div className="App ocean">
+    <div className="App ocean" id="ocean">
         <SailBoat />
-        <SailBoat style={{left: 60}}/>
+        {/* <SailBoat style={{left: 60}}/> */}
     </div>
   );
 }
