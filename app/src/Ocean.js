@@ -85,10 +85,13 @@ export default function Ocean() {
     color: "white",
   };
   const addBoat = () => {
-    position.push({top: 0, left: 0})
+    position.push()
     console.log('Position ', position)
-    setSailBoatIds([0, 1])
-    setPosition(position)
+    console.log(sailBoatIds.length)
+    setSailBoatIds(sailBoatIds => [...sailBoatIds, sailBoatIds.length])
+    setPosition(position => [...position, {top: 60, left: 60}])
+    console.log(position)
+    console.log(sailBoatIds)
   }
 
   const getSailBoats = () => {
