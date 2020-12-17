@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 
-export default function Sailboat({ boatId, position, onMouseUp, onMouseDown}) {
+export default function Sailboat({ boatId, position, onMouseUp, onMouseDown, height, width}) {
   const translateValue = `translate(${position.left}px, ${position.top}px)`;
   const styles = {
     zIndex: 10,
@@ -8,8 +8,8 @@ export default function Sailboat({ boatId, position, onMouseUp, onMouseDown}) {
     top: "0px",
     left: "0px",
     backgroundColor: "pink",
-    width: "50px",
-    height: "50px",
+    width: width + "px",
+    height: height + "px",
     transform: translateValue,
   };
 
