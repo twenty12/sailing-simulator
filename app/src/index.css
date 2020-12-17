@@ -12,13 +12,3 @@ code {
     monospace;
 }
 
-.ocean {
-  margin: 20px;
-  position: relative;
-  width: 500px;
-  height: 500px;
-  background-color: aqua;
-  border: 1px solid black;
-  border-radius: 2px;
-}
-

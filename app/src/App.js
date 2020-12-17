@@ -1,11 +1,13 @@
 import './App.css';
-import SailBoat from './SailBoat'
+import Ocean from './Ocean'
 
 function App() {
 
   return (
-    <div className="App ocean" id="ocean">
-        <SailBoat />
+    <div style={{
+        userSelect: 'none'
+    }} className="App ocean">
+        <Ocean />
         {/* <SailBoat style={{left: 60}}/> */}
     </div>
   );
