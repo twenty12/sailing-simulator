@@ -245,6 +245,55 @@ export default function Ocean() {
             newArr[idOfSelectedBoat] = newPosition;
             setPositions(newArr);
         }
+        if (controllerId == 'top') {
+            const newPosition = {
+                top: offsetY,
+                left: positions[idOfSelectedBoat].left
+            };
+            newDimensionsArr[idOfSelectedBoat] = {
+                height: boatDimensions.height + (positions[idOfSelectedBoat].top - offsetY),
+                width: boatDimensions.width
+            }
+            setBoatsDimensions(newDimensionsArr)
+            let newArr = [...positions];
+            newArr[idOfSelectedBoat] = newPosition;
+            setPositions(newArr);
+        }
+        if (controllerId === 'right') {
+            newDimensionsArr[idOfSelectedBoat] = {
+                height: boatDimensions.height,
+                width: e.clientX - positions[idOfSelectedBoat].left
+            }
+            setBoatsDimensions(newDimensionsArr)
+        }
+        if (controllerId == 'bottom') {
+            const newPosition = {
+                top: positions[idOfSelectedBoat].top,
+                left: positions[idOfSelectedBoat].left
+            };
+            newDimensionsArr[idOfSelectedBoat] = {
+                height: offsetY - positions[idOfSelectedBoat].top,
+                width: boatDimensions.width
+            }
+            setBoatsDimensions(newDimensionsArr)
+            let newArr = [...positions];
+            newArr[idOfSelectedBoat] = newPosition;
+            setPositions(newArr);
+        }
+        if (controllerId == 'left') {
+            const newPosition = {
+                top: offsetY,
+                left: offsetX
+            };
+            newDimensionsArr[idOfSelectedBoat] = {
+                height: boatDimensions.height,
+                width: boatDimensions.width + (positions[idOfSelectedBoat].left - offsetX)
+            }
+            setBoatsDimensions(newDimensionsArr)
+            let newArr = [...positions];
+            newArr[idOfSelectedBoat] = newPosition;
+            setPositions(newArr);
+        }
     }
     return (
         <>

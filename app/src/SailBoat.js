@@ -66,6 +66,34 @@ export default function Sailboat({
                 left: "-4px",
             },
         },
+        {
+            id: "top",
+            style: {
+                top: "-4px",
+                left: (boatDimensions.width/2 - 4) + "px",
+            },
+        },
+        {
+            id: "right",
+            style: {
+                top: (boatDimensions.height/2 - 4) + "px",
+                left: (boatDimensions.width - 4) + "px",
+            },
+        },
+        {
+            id: "bottom",
+            style: {
+                top: (boatDimensions.height - 4) + "px",
+                left: (boatDimensions.width/2 - 4) + "px",
+            },
+        },
+        {
+            id: "left",
+            style: {
+                top: (boatDimensions.height/2 - 4) + "px",
+                left: "-4px",
+            },
+        },
     ];
 
     const getControllers = () => {
