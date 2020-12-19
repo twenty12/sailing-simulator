@@ -10,6 +10,7 @@ const INITIAL_POSITION = {
 const BOAT_HEIGHT = 50;
 const BOAT_WIDTH = 50;
 
+
 export default function Ocean() {
     const [dragStartingPosition, setDragStartingPosition] = useState([
         INITIAL_POSITION,
@@ -17,9 +18,10 @@ export default function Ocean() {
     const [dragOffset, setDragOffset] = useState([INITIAL_POSITION]);
     const [positions, setPositions] = useState([INITIAL_POSITION]);
     const [idOfSelectedBoat, setIdOfSelectedBoat] = useState(0);
+    const [idOfHoveredBoat, setIdOfHoveredBoat] = useState(0);
     const [sailBoatIds, setSailBoatIds] = useState([0]);
     const [isDragging, setIsDragging] = useState(false);
-
+    const [hover, setHover] = useState(false)
     const calculateMove = (oldPosition) => {
         const { left: offsetX, top: offsetY } = dragOffset;
         const newPosition = {
@@ -37,55 +39,46 @@ export default function Ocean() {
             left: e.clientX,
         };
         setDragStartingPosition(newDragStartingPoint);
-        // console.log("newDragStartingPoint", newDragStartingPoint);
         setIsDragging(true);
     };
 
     const handleMouseDown = (e, idOfSelectedBoat) => {
         setIdOfSelectedBoat(idOfSelectedBoat);
         if (!isDragging) {
-            //     console.log("running here click down");
             startDragging(e);
         }
     };
 
-    const handleMouseUp = (e) => {
-        // console.log("running here click up");
+    const handleMouseEnter = (e, idOfHoveredBoat) => {
+        setIdOfHoveredBoat(idOfHoveredBoat);
+        setHover(true)
+    }
 
+    const handleMouseLeave = (e) => {
+        setIdOfHoveredBoat(null);
+        setHover(false)
+        console.log(idOfSelectedBoat)
+    }
+
+    const handleMouseUp = (e) => {
         setIsDragging(false);
     };
 
     const onMouseMove = (e) => {
-        // console.log('e.clientX', e.clientX)
-        // console.log('e.clientY', e.clientY)
-        // console.log('dragStartingPosition.left', dragStartingPosition.left)
-        // console.log('dragStartingPosition.top', dragStartingPosition.top)
         if (isDragging === true) {
             const moveOffset = {
                 left: e.clientX,
                 top: e.clientY,
             };
             setDragOffset(moveOffset);
-            // console.log("moveOffset", moveOffset);
             calculateMove(positions);
         }
     };
 
-    const oceanStyles = {
-        backgroundColor: "yellow",
-        height: "500px",
-        width: "500px",
-        position: "relative",
-    };
-    const debugStyles = {
-        position: "absolute",
-        top: "500px",
-        backgroundColor: "purple",
-        color: "white",
-    };
     const overLapExists = (newPosition) => {
         var overLaps = [0];
         for (var oldPosition of positions) {
+
             var overlapX = !(
                 newPosition.left + BOAT_WIDTH < oldPosition.left ||
                 newPosition.left > oldPosition.left + BOAT_WIDTH
@@ -101,6 +94,7 @@ export default function Ocean() {
         const reducer = (accumulator, currentValue) => accumulator + currentValue;
         return overLaps.reduce(reducer) > 0;
     };
+
     const getBoatLaunchCoords = () => {
         var newPosition = { top: 0, left: 0 };
         const attempts = 100;
@@ -115,10 +109,24 @@ export default function Ocean() {
             };
         }
     };
+
     const addBoat = () => {
         getBoatLaunchCoords();
         setSailBoatIds([...sailBoatIds, sailBoatIds.length]);
         setPositions([...positions, getBoatLaunchCoords()]);
+    };
+    const oceanStyles = {
+        backgroundColor: "yellow",
+        height: "500px",
+        width: "500px",
+        position: "relative",
+    };
+
+    const debugStyles = {
+        position: "absolute",
+        top: "500px",
+        backgroundColor: "purple",
+        color: "white",
     };
 
     const getSailBoats = () => {
@@ -130,8 +138,11 @@ export default function Ocean() {
                     width={BOAT_WIDTH}
                     onMouseUp={handleMouseUp}
                     onMouseDown={handleMouseDown}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                     key={sailBoatId}
                     position={positions[sailBoatId]}
+                    hover={hover}
                 />
             );
         });
@@ -141,8 +152,6 @@ export default function Ocean() {
         getSailBoats();
     }, [sailBoatIds]);
 
-    // )});
-    // create an array with ids of sailboats and add button that creates more sailboats.
     return (
         <>
             <button onClick={addBoat}>Launch Boat</button>
