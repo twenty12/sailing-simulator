@@ -194,20 +194,27 @@ export default function Ocean() {
     }
 
     const calculateDimensionChange = (e) => {
-        console.log('changing')
-        // positions[idOfSelectedBoat].x + boatDimensions.width - e.clientX
-        // console.log(e.clientX - boatDimensions.width)
+        const { left: offsetX, top: offsetY } = dragOffset;
 
-        // console.log('cacl ', (e.clientY - positions[idOfSelectedBoat].top))
-        if (controllerId == 'topRight'){
-            const { left: offsetX, top: offsetY } = dragOffset;
+        if (controllerId === 'topLeft'){
+            const newPosition = {
+                top: offsetY,
+                left: offsetX
+            };
+            setBoatDimensions({
+                height: boatDimensions.height + (positions[idOfSelectedBoat].top - offsetY),
+                width: boatDimensions.width + (positions[idOfSelectedBoat].left - offsetX)
+            })
+            let newArr = [...positions];
+            newArr[idOfSelectedBoat] = newPosition;
+            setPositions(newArr);
+        }
+
+        if (controllerId === 'topRight'){
             const newPosition = {
                 top: offsetY,
                 left: positions[idOfSelectedBoat].left
             };
-            console.log('e.clientY', e.clientY)
-            console.log('boatDimensions.height', boatDimensions.height)
-            console.log('positions[idOfSelectedBoat].top', positions[idOfSelectedBoat].top)
             setBoatDimensions({
                 height: boatDimensions.height + (positions[idOfSelectedBoat].top - offsetY),
                 width: e.clientX - positions[idOfSelectedBoat].left
@@ -217,6 +224,26 @@ export default function Ocean() {
             setPositions(newArr);
         }
 
+        if (controllerId === 'bottomRight') {
+            setBoatDimensions({
+                height: offsetY - positions[idOfSelectedBoat].top,
+                width: e.clientX - positions[idOfSelectedBoat].left
+            })
+        }
+
+        if (controllerId == 'bottomLeft') {
+            const newPosition = {
+                top: positions[idOfSelectedBoat].top,
+                left: offsetX
+            };
+            setBoatDimensions({
+                height: offsetY - positions[idOfSelectedBoat].top,
+                width: boatDimensions.width + (positions[idOfSelectedBoat].left - offsetX)
+            })
+            let newArr = [...positions];
+            newArr[idOfSelectedBoat] = newPosition;
+            setPositions(newArr);
+        }
     }
     return (
         <>
