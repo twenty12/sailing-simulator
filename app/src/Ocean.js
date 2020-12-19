@@ -134,43 +134,6 @@ export default function Ocean() {
         setPositions([...positions, getBoatLaunchCoords()]);
         setBoatsDimensions([...boatsDimensions, INITIAL_DIMENSIONS])
     };
-    const oceanStyles = {
-        backgroundColor: "yellow",
-        height: "500px",
-        width: "500px",
-        position: "relative",
-    };
-
-    const debugStyles = {
-        position: "absolute",
-        top: "500px",
-        backgroundColor: "purple",
-        color: "white",
-    };
-
-    const getSailBoats = () => {
-        return sailBoatIds.map((sailBoatId) => {
-            return (
-                <SailBoat
-                    boatId={sailBoatId}
-                    boatDimensions={boatsDimensions[sailBoatId]}
-                    onMouseUp={handleMouseUp}
-                    onMouseDown={handleMouseDown}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                    handleControllerMouseDown={handleControllerMouseDown}
-                    handleControllerMouseUp={handleControllerMouseUp}
-                    key={sailBoatId}
-                    position={positions[sailBoatId]}
-                    hover={hoverStates[sailBoatId]}
-                />
-            );
-        });
-    };
-    useEffect(() => {
-        console.log("use effect get sailboat");
-        getSailBoats();
-    }, [sailBoatIds]);
 
     const startTransforming = (e) => {
         setIsTransforming(true)
@@ -295,6 +258,44 @@ export default function Ocean() {
             setPositions(newArr);
         }
     }
+    const getSailBoats = () => {
+        return sailBoatIds.map((sailBoatId) => {
+            return (
+                <SailBoat
+                    boatId={sailBoatId}
+                    boatDimensions={boatsDimensions[sailBoatId]}
+                    onMouseUp={handleMouseUp}
+                    onMouseDown={handleMouseDown}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    handleControllerMouseDown={handleControllerMouseDown}
+                    handleControllerMouseUp={handleControllerMouseUp}
+                    key={sailBoatId}
+                    position={positions[sailBoatId]}
+                    hover={hoverStates[sailBoatId]}
+                />
+            );
+        });
+    };
+    useEffect(() => {
+        console.log("use effect get sailboat");
+        getSailBoats();
+    }, [sailBoatIds]);
+
+    const oceanStyles = {
+        backgroundColor: "yellow",
+        height: "500px",
+        width: "500px",
+        position: "relative",
+    };
+
+    const debugStyles = {
+        position: "absolute",
+        top: "500px",
+        backgroundColor: "purple",
+        color: "white",
+    };
+
     return (
         <>
             <button onClick={addBoat}>Launch Boat</button>
