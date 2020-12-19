@@ -8,7 +8,6 @@ function App() {
         userSelect: 'none'
     }} className="App ocean">
         <Ocean />
-        {/* <SailBoat style={{left: 60}}/> */}
     </div>
   );
 }

@@ -21,8 +21,13 @@ export default function Ocean() {
     const [idOfHoveredBoat, setIdOfHoveredBoat] = useState(0);
     const [sailBoatIds, setSailBoatIds] = useState([0]);
     const [isDragging, setIsDragging] = useState(false);
-    const [hover, setHover] = useState(false)
-    const calculateMove = (oldPosition) => {
+    const [isTransforming, setIsTransforming] = useState(false);
+    const [hoverStates, setHoverStates] = useState([false])
+    const [controllerId, setControllerId] = useState(null)
+    const [boatDimensions, setBoatDimensions] = useState({
+        height: BOAT_HEIGHT,
+        width: BOAT_WIDTH})
+    const calculateMove = () => {
         const { left: offsetX, top: offsetY } = dragOffset;
         const newPosition = {
             top: offsetY,
@@ -50,28 +55,39 @@ export default function Ocean() {
     };
 
     const handleMouseEnter = (e, idOfHoveredBoat) => {
+        let newArr = [...hoverStates];
+        newArr[idOfHoveredBoat] = true;
         setIdOfHoveredBoat(idOfHoveredBoat);
-        setHover(true)
+        setHoverStates(newArr)
     }
 
     const handleMouseLeave = (e) => {
+        let newArr = [...hoverStates];
+        newArr[idOfHoveredBoat] = false;
         setIdOfHoveredBoat(null);
-        setHover(false)
-        console.log(idOfSelectedBoat)
+        setHoverStates(newArr)
     }
 
     const handleMouseUp = (e) => {
         setIsDragging(false);
+        setIsTransforming(false);
     };
 
     const onMouseMove = (e) => {
-        if (isDragging === true) {
-            const moveOffset = {
-                left: e.clientX,
-                top: e.clientY,
-            };
+
+        const moveOffset = {
+            left: e.clientX,
+            top: e.clientY,
+        };
+        if (isTransforming) {
             setDragOffset(moveOffset);
-            calculateMove(positions);
+            calculateDimensionChange(e)
+            
+        }
+        if (isDragging === true) {
+
+            setDragOffset(moveOffset);
+            calculateMove();
         }
     };
 
@@ -134,15 +150,16 @@ export default function Ocean() {
             return (
                 <SailBoat
                     boatId={sailBoatId}
-                    height={BOAT_HEIGHT}
-                    width={BOAT_WIDTH}
+                    boatDimensions={boatDimensions}
                     onMouseUp={handleMouseUp}
                     onMouseDown={handleMouseDown}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
+                    handleControllerMouseDown={handleControllerMouseDown}
+                    handleControllerMouseUp={handleControllerMouseUp}
                     key={sailBoatId}
                     position={positions[sailBoatId]}
-                    hover={hover}
+                    hover={hoverStates[sailBoatId]}
                 />
             );
         });
@@ -152,6 +169,55 @@ export default function Ocean() {
         getSailBoats();
     }, [sailBoatIds]);
 
+    const startTransforming = (e) => {
+        console.log(e)
+        // setBoatDimensions({
+        //     height:100,
+        //     width: 100
+        // })
+        setIsTransforming(true)
+        // startTransforming(true);
+    }
+    const handleControllerMouseDown = (e, boatId, controllerId) => {
+        setIdOfSelectedBoat(boatId)
+        if (!isTransforming) {
+            startTransforming(e);
+        }
+        setControllerId(controllerId)
+        // isTransforming(true)
+        e.stopPropagation()
+    }
+    const handleControllerMouseUp = (e) => {
+        startTransforming(false);
+        setControllerId(null)
+        e.stopPropagation()
+    }
+
+    const calculateDimensionChange = (e) => {
+        console.log('changing')
+        // positions[idOfSelectedBoat].x + boatDimensions.width - e.clientX
+        // console.log(e.clientX - boatDimensions.width)
+
+        // console.log('cacl ', (e.clientY - positions[idOfSelectedBoat].top))
+        if (controllerId == 'topRight'){
+            const { left: offsetX, top: offsetY } = dragOffset;
+            const newPosition = {
+                top: offsetY,
+                left: positions[idOfSelectedBoat].left
+            };
+            console.log('e.clientY', e.clientY)
+            console.log('boatDimensions.height', boatDimensions.height)
+            console.log('positions[idOfSelectedBoat].top', positions[idOfSelectedBoat].top)
+            setBoatDimensions({
+                height: boatDimensions.height + (positions[idOfSelectedBoat].top - offsetY),
+                width: e.clientX - positions[idOfSelectedBoat].left
+            })
+            let newArr = [...positions];
+            newArr[idOfSelectedBoat] = newPosition;
+            setPositions(newArr);
+        }
+
+    }
     return (
         <>
             <button onClick={addBoat}>Launch Boat</button>
