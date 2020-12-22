@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/sailing-simulator/static/css/main.a66ff56c.chunk.css",
+    "main.js": "/sailing-simulator/static/js/main.1d449a90.chunk.js",
+    "main.js.map": "/sailing-simulator/static/js/main.1d449a90.chunk.js.map",
+    "runtime-main.js": "/sailing-simulator/static/js/runtime-main.dfea9587.js",
+    "runtime-main.js.map": "/sailing-simulator/static/js/runtime-main.dfea9587.js.map",
+    "static/js/2.cca0a079.chunk.js": "/sailing-simulator/static/js/2.cca0a079.chunk.js",
+    "static/js/2.cca0a079.chunk.js.map": "/sailing-simulator/static/js/2.cca0a079.chunk.js.map",
+    "static/js/3.4e2473a9.chunk.js": "/sailing-simulator/static/js/3.4e2473a9.chunk.js",
+    "static/js/3.4e2473a9.chunk.js.map": "/sailing-simulator/static/js/3.4e2473a9.chunk.js.map",
+    "index.html": "/sailing-simulator/index.html",
+    "static/css/main.a66ff56c.chunk.css.map": "/sailing-simulator/static/css/main.a66ff56c.chunk.css.map",
+    "static/js/2.cca0a079.chunk.js.LICENSE.txt": "/sailing-simulator/static/js/2.cca0a079.chunk.js.LICENSE.txt",
+    "static/media/sailboat.b45a8d46.svg": "/sailing-simulator/static/media/sailboat.b45a8d46.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.dfea9587.js",
+    "static/js/2.cca0a079.chunk.js",
+    "static/css/main.a66ff56c.chunk.css",
+    "static/js/main.1d449a90.chunk.js"
+  ]
+}
