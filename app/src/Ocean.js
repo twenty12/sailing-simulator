@@ -29,6 +29,7 @@ export default function Ocean() {
     const [hoverStates, setHoverStates] = useState([false])
     const [controllerId, setControllerId] = useState(null)
     const [boatsDimensions, setBoatsDimensions] = useState([INITIAL_DIMENSIONS])
+
     const calculateMove = () => {
         const { left: offsetX, top: offsetY } = dragOffset;
         const newPosition = {
@@ -283,17 +284,10 @@ export default function Ocean() {
     }, [sailBoatIds]);
 
     const oceanStyles = {
-        backgroundColor: "yellow",
+        backgroundColor: "blue",
         height: "500px",
         width: "500px",
         position: "relative",
-    };
-
-    const debugStyles = {
-        position: "absolute",
-        top: "500px",
-        backgroundColor: "purple",
-        color: "white",
     };
 
     return (
@@ -304,14 +298,6 @@ export default function Ocean() {
                 onMouseUp={handleMouseUp}
                 style={oceanStyles}
             >
-                <div style={debugStyles}>
-                    <div>isDragging: {JSON.stringify(isDragging)}</div>
-                    <div>
-                        dragStartingPosition: {JSON.stringify(dragStartingPosition)}
-                    </div>
-                    <div>dragOffset: {JSON.stringify(dragOffset)}</div>
-                    <div>positions: {JSON.stringify(positions)}</div>
-                </div>
                 {getSailBoats()}
             </div>
         </>

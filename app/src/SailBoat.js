@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-
+import SailBoat from './sailboat.svg'
 export default function Sailboat({
     boatId,
     position,
@@ -116,7 +116,7 @@ export default function Sailboat({
             style={styles}
         >
             {getControllers()}
-            {"BOAT"}
+            <img width="100%" height="100%" src={SailBoat} alt="sailboat" />
         </div>
     );
 }
